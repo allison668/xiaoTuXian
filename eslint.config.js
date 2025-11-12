@@ -21,4 +21,12 @@ export default defineConfig([
 
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
+
+
+  {
+    name: 'custom/vue-rules',
+    rules: {
+      'vue/multi-word-component-names': 'off', // 允许单单词组件名，如 App.vue
+    }
+  }
 ])
