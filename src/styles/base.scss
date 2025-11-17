@@ -1,0 +1,87 @@
+// 全局通用样式：轻量、现代、适用于 Vue 3 项目
+
+// 1. 通配符：统一盒模型
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// 2. 移除默认 margin/padding（只针对有默认样式的元素）
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+dl,
+dd,
+blockquote,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+// 3. 基础 body 设置
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// 4. a 标签：去掉下划线 + 自定义颜色（无 hover 效果，按需加）
+a {
+  color: inherit; // 继承父级颜色（或改成 #409eff 等主题色）
+  text-decoration: none; // 去掉下划线
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    text-decoration: none; // 确保 hover 也不出现下划线
+    outline: none;
+  }
+}
+
+// 5. 图片自适应
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+// 6. 表单元素重置（可选）
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+}
+
+// 7. 列表样式重置
+ul,
+ol {
+  list-style: none;
+}
+
+// 8. 防止点击高亮（移动端）
+* {
+  -webkit-tap-highlight-color: transparent;
+}
