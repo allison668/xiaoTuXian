@@ -24,6 +24,7 @@ onMounted(() => {
     <LayoutFixed />
     <LayoutNav />
     <LayoutHeader />
+
     <RouterView />
     <LayoutFooter />
   </div>
