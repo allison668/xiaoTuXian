@@ -1,7 +1,7 @@
 <script setup>
 
 import GoodsItem from '../Home/components/GoodsItem.vue'
-import { useBanner } from './composables/UseBanner'
+import { useBanner } from './composables/useBanner'
 import { useCategory } from './composables/useCategory'
 const { bannerList } = useBanner()
 const { categoryDate } = useCategory()
@@ -30,7 +30,7 @@ const { categoryDate } = useCategory()
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryDate.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
