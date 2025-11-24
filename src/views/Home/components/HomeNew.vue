@@ -1,7 +1,7 @@
 <script setup>
 import HomePanel from './HomePanel.vue'
 import { findNewAPI } from '@/apis/home'
-import { getHotAPI } from '@/apis/home'
+// import { getHotAPI } from '@/apis/home'
 import { ref, onMounted } from 'vue'
 //获取数据
 const newList = ref([])
@@ -11,23 +11,23 @@ const getNewList = async () => {
   newList.value = res.result
 }
 
-const hotList = ref([]);
-const getHotList = async () => {
-  const res = await getHotAPI();
-  hotList.value = res.result;
-};
+// const hotList = ref([]);
+// const getHotList = async () => {
+//   const res = await getHotAPI();
+//   hotList.value = res.result;
+// };
 
 onMounted(() => {
   getNewList()
-  getHotList();
+  // getHotList();
 })
 </script>
 
 <template>
   <HomePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
     <ul class="goods-list">
-      <li v-for="item in newList" :key="item.id">
-        <RouterLink to="/">
+      <li v-for="item in newList" :key="item.id" @click="logJump(item)">
+        <RouterLink :to="`/detail/${item.id}`">
           <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
           <p class="price">&yen;{{ item.price }}</p>
@@ -35,7 +35,7 @@ onMounted(() => {
       </li>
     </ul>
   </HomePanel>
-  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
+  <!-- <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
@@ -45,7 +45,7 @@ onMounted(() => {
         </RouterLink>
       </li>
     </ul>
-  </HomePanel>
+  </HomePanel> -->
   <!-- 下面是插槽主体内容模版
   <ul class="goods-list">
     <li v-for="item in newList" :key="item.id">
