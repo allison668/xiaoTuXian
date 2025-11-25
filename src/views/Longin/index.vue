@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { loginAPI } from '@/apis/user';
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from 'vue-router';
 
 const form = ref({
   account: '',
@@ -30,14 +34,38 @@ const rules = {
 }
 
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
-  formRef.value.validate(valid => {
-    console.log(valid);
+  const { account, password } = form.value
+  formRef.value.validate(async (valid) => {
+    console.log('表单校验结果：', valid);
     if (valid) {
-      console.log(form.value);
+      console.log('发给服务器的参数：', { account, password })
+      const res = await loginAPI({ account, password })
+      console.log('登录成功返回：', res);
+      //跳转
+      ElMessage({ type: 'success', message: '登录成功' })
+      router.replace({ path: '/' })
     }
   })
 }
+// const doLogin = async () => {
+//   try {
+//     await loginFormRef.value.validate()
+//     // 关键：打印要发送的参数，看是否正确
+//     console.log('请求参数：', {
+//       account: form.value.account,
+//       password: form.value.password
+//     })
+//     // 调用接口
+//     const res = await loginAPI({
+//       account: form.value.account,
+//       password: form.value.password
+//     })
+//   } catch (err) {
+//     console.log('登录失败', err)
+//   }
+// }
 
 </script>
 
