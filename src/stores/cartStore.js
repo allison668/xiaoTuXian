@@ -19,6 +19,11 @@ export const useCartStore = defineStore(
       // cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
     };
 
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => item.skuId === skuId);
+      item.selected = selected;
+    };
+
     const allCart = computed(() => cartList.value.reduce((a, c) => a + c.count, 0));
 
     const allPrice = computed(() => cartList.value.reduce((a, c) => a + c.count * c.price, 0));
@@ -28,6 +33,7 @@ export const useCartStore = defineStore(
       delCart,
       allCart,
       allPrice,
+      singleCheck,
     };
   },
   {
