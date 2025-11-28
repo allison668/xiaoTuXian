@@ -16,3 +16,21 @@ export const findNewCartListAPI = () => {
     url: "/member/cart",
   });
 };
+
+export const delCartAPI = (ids) => {
+  return requset({
+    url: "/member/cart",
+    method: "DELETE",
+    data: {
+      ids,
+    },
+  });
+};
+
+export const mergeCartAPI = (data) => {
+  return requset({
+    url: "/member/cart/merge",
+    method: "POST",
+    data,
+  });
+};

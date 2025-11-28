@@ -1,19 +1,23 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { useUserStore } from "./user";
-import { insertCartAPI, findNewCartListAPI } from "@/apis/cart";
+import { useUserStore } from "./userStore";
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from "@/apis/cart";
 export const useCartStore = defineStore(
   "cart",
   () => {
     const cartList = ref([]);
+    const updateNewList = async () => {
+      const res = await findNewCartListAPI();
+      cartList.value = res.result;
+    };
+
     const userStore = useUserStore();
     const isLogin = computed(() => userStore.userInfo.token);
     const addCart = async (goods) => {
       const { skuId, count } = goods;
       if (isLogin.value) {
-        await insertCartAPI({ skuId, count });
-        const res = await findNewCartListAPI();
-        cartList.value = res.result;
+        await insertCartAPI(skuId, count);
+        updateNewList();
       } else {
         const item = cartList.value.find((item) => goods.skuId === item.skuId);
         if (item) {
@@ -24,12 +28,21 @@ export const useCartStore = defineStore(
       }
     };
 
-    const delCart = (skuId) => {
-      const idx = cartList.value.findIndex((item) => item.skuId === skuId);
-      cartList.value.splice(idx, 1);
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        await delCartAPI([skuId]);
+        updateNewList();
+      } else {
+        const idx = cartList.value.findIndex((item) => item.skuId === skuId);
+        cartList.value.splice(idx, 1);
+      }
+
       // cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
     };
 
+    const clearCart = () => {
+      cartList.value = [];
+    };
     const singleCheck = (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId);
       item.selected = selected;
@@ -62,6 +75,8 @@ export const useCartStore = defineStore(
       allCheck,
       selectedCount,
       selectedPrice,
+      clearCart,
+      updateNewList,
     };
   },
   {
