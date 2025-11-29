@@ -2,18 +2,21 @@
 import { getCheckInfoAPI } from '@/apis/checkout';
 import { ref, onMounted } from 'vue'
 const checkInfo = ref({})  // 订单对象
+const curAddress = ref({})
 
 const getCheckInfo = async () => {
   const res = await getCheckInfoAPI()
   checkInfo.value = res.result
-
+  const item = checkInfo.value.userAddress.find(item => item.isDefault === 0)
+  console.log(item);
+  curAddress.value = item
 }
 onMounted(() => {
   getCheckInfo()
 })
 
 
-const curAddress = {}  // 地址对象
+// const curAddress = {}  // 地址对象
 
 
 
